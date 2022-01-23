@@ -3,12 +3,11 @@ So Simple (and so cute hahah) Auditing Sampling Tool for estimating sample size.
 
 Just another tool for evaluating the size of samplings, developed in Java. It incoporates the Cochran, Slovin/Yamane, and Continuous Outcome sampling types.
 
-![Ko3c4qtKKJ](https://user-images.githubusercontent.com/40904281/150665011-8084d676-26c9-4762-baac-bb19c176e595.png)
+![o2lDSEKO5n](https://user-images.githubusercontent.com/40904281/150665483-2cab02ce-272a-4bd1-b9ab-3432908b9fef.jpg)
 
-![07A1Ki51W1](https://user-images.githubusercontent.com/40904281/150665023-7af2c845-1122-4441-a409-a86ea403efcf.png) 
+![Y0LEUsHCkU](https://user-images.githubusercontent.com/40904281/150665495-68c6bfd7-95c4-406e-80c0-f4b524139b80.jpg)
 
-![N6cvj6N2Z5](https://user-images.githubusercontent.com/40904281/150665068-81372808-b2be-47f4-bf31-6eb12a821c9f.png)
+![7383JqrjyG](https://user-images.githubusercontent.com/40904281/150665504-01634d5a-2046-4e1f-bb71-cc78b09c3249.jpg)
 
-![rdieSN5Ktm](https://user-images.githubusercontent.com/40904281/150665036-69631898-097e-4036-9f7e-15233cb3094a.png) 
-
+![ZTUJUnR4wb](https://user-images.githubusercontent.com/40904281/150665516-a4414bc8-02ba-4a73-84ff-1f840986a6a8.jpg)
 
