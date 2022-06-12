@@ -3,8 +3,6 @@ package auditingsampling;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.stage.Stage;
@@ -102,62 +100,60 @@ public class Main extends Application {
 					}
 				};
 			});
-			cmSamplingType.setOnAction(new EventHandler<ActionEvent>(){
-				public void handle(ActionEvent e){
-					lbConfidenceLevel.setDisable(false);
-					cbConfidenceLevel.setDisable(false);
-					cbConfidenceLevel.setValue(95.0);
-					lbSD.setDisable(false);
-					txSD.setDisable(false);
-					txSD.setText("0.0");
-					lbErrorMargin.setDisable(false);
-					cbErrorMargin.setDisable(false);
-					cbErrorMargin.setValue(0.05);
-					lbPopulationProp.setDisable(false);
-					cbPopulationProp.setDisable(false);
-					cbPopulationProp.setValue(0.5);
-					lbErrorMarginUnits.setDisable(false);
-					txErrorMarginUnits.setDisable(false);
-					lbPopulation.setDisable(false);
-					txPopulation.setDisable(false);
-					txPopulation.setText("0");
-					btCalculate.setDisable(false);
-					lbResult.setText("");
-					result=-1.0;
-					switch (cmSamplingType.getValue()){
-					case "Cochran (big or unknow population) - Sample Size for One Sample, Dichotomous Outcome":
-						lbErrorMarginUnits.setDisable(true);
-						txErrorMarginUnits.setDisable(true);
-						lbSD.setDisable(true);
-						txSD.setDisable(true);
-						lbPopulation.setDisable(true);
-						txPopulation.setDisable(true);
-						break;
-					case "Cochran (small population)":
-						lbSD.setDisable(true);
-						txSD.setDisable(true);
-						lbErrorMarginUnits.setDisable(true);
-						txErrorMarginUnits.setDisable(true);
-						break;
-					case "Slovin/Yamane":
-						lbConfidenceLevel.setDisable(true);
-						cbConfidenceLevel.setDisable(true);
-						lbSD.setDisable(true);
-						txSD.setDisable(true);
-						lbErrorMarginUnits.setDisable(true);
-						txErrorMarginUnits.setDisable(true);
-						break;
-					case "Sample Size for One Sample, Continuous Outcome":
-						lbErrorMargin.setDisable(true);
-						cbErrorMargin.setDisable(true);
-						txPopulation.setDisable(true);
-						lbPopulationProp.setDisable(true);
-						cbPopulationProp.setDisable(true);
-						break;
-					default:
-						break;
-					}					
-				}
+			cmSamplingType.setOnAction(e -> {
+				lbConfidenceLevel.setDisable(false);
+				cbConfidenceLevel.setDisable(false);
+				cbConfidenceLevel.setValue(95.0);
+				lbSD.setDisable(false);
+				txSD.setDisable(false);
+				txSD.setText("0.0");
+				lbErrorMargin.setDisable(false);
+				cbErrorMargin.setDisable(false);
+				cbErrorMargin.setValue(0.05);
+				lbPopulationProp.setDisable(false);
+				cbPopulationProp.setDisable(false);
+				cbPopulationProp.setValue(0.5);
+				lbErrorMarginUnits.setDisable(false);
+				txErrorMarginUnits.setDisable(false);
+				lbPopulation.setDisable(false);
+				txPopulation.setDisable(false);
+				txPopulation.setText("0");
+				btCalculate.setDisable(false);
+				lbResult.setText("");
+				result=-1.0;
+				switch (cmSamplingType.getValue()){
+				case "Cochran (big or unknow population) - Sample Size for One Sample, Dichotomous Outcome":
+					lbErrorMarginUnits.setDisable(true);
+					txErrorMarginUnits.setDisable(true);
+					lbSD.setDisable(true);
+					txSD.setDisable(true);
+					lbPopulation.setDisable(true);
+					txPopulation.setDisable(true);
+					break;
+				case "Cochran (small population)":
+					lbSD.setDisable(true);
+					txSD.setDisable(true);
+					lbErrorMarginUnits.setDisable(true);
+					txErrorMarginUnits.setDisable(true);
+					break;
+				case "Slovin/Yamane":
+					lbConfidenceLevel.setDisable(true);
+					cbConfidenceLevel.setDisable(true);
+					lbSD.setDisable(true);
+					txSD.setDisable(true);
+					lbErrorMarginUnits.setDisable(true);
+					txErrorMarginUnits.setDisable(true);
+					break;
+				case "Sample Size for One Sample, Continuous Outcome":
+					lbErrorMargin.setDisable(true);
+					cbErrorMargin.setDisable(true);
+					txPopulation.setDisable(true);
+					lbPopulationProp.setDisable(true);
+					cbPopulationProp.setDisable(true);
+					break;
+				default:
+					break;
+				}					
 			});
 
 			vbSamplingType.getChildren().addAll(lbSamplingType, cmSamplingType);
@@ -225,49 +221,47 @@ public class Main extends Application {
 
 			btCalculate= new Button("Calculate");
 			btCalculate.setDisable(true);
-			btCalculate.setOnAction(new EventHandler<ActionEvent>(){
-				public void handle(ActionEvent e){
-					switch (cmSamplingType.getValue()){
-					case "Cochran (big or unknow population) - Sample Size for One Sample, Dichotomous Outcome":
-						result = (z.get(cbConfidenceLevel.getSelectionModel().getSelectedIndex()) * z.get(cbConfidenceLevel.getSelectionModel().getSelectedIndex())
-								* cbPopulationProp.getValue() * (1 - cbPopulationProp.getValue())) / (cbErrorMargin.getValue() * cbErrorMargin.getValue());
-						break;
-					case "Cochran (small population)":
-						double cochran= (z.get(cbConfidenceLevel.getSelectionModel().getSelectedIndex()) * z.get(cbConfidenceLevel.getSelectionModel().getSelectedIndex())
-								* cbPopulationProp.getValue() * (1 - cbPopulationProp.getValue())) / (cbErrorMargin.getValue() * cbErrorMargin.getValue());
-						try {
-							result = cochran / (1 + ((cochran - 1 ) / Double.parseDouble(txPopulation.getText())));
-						} catch (NumberFormatException e1) {
-							show_error("Population format number not valid");
-						}
-						break;
-					case "Slovin/Yamane": 
-						try {
-							result = Double.parseDouble(txPopulation.getText()) / (1.0 + (Double.parseDouble(txPopulation.getText()) * Math.pow(cbErrorMargin.getValue(), 2)));
-						} catch (NumberFormatException e1) {
-							show_error("Population format number not valid");
-						}
-						break;
-					case "Sample Size for One Sample, Continuous Outcome":
-						double sd=0.0;
-						try {
-							sd = Double.parseDouble(txSD.getText());
-						} catch (NumberFormatException e1) {
-							show_error("Standard Desviation format number not valid");
-						}
-						double emu=0.0;
-						try {
-							emu = Double.parseDouble(txErrorMarginUnits.getText());
-							result = Math.pow(z.get(cbConfidenceLevel.getSelectionModel().getSelectedIndex()) * sd / emu , 2);
-						} catch (NumberFormatException e1) {
-							show_error("Error Margin format number not valid");
-						}
-						break;
-					default:
-						break;
+			btCalculate.setOnAction(e -> {
+				switch (cmSamplingType.getValue()){
+				case "Cochran (big or unknow population) - Sample Size for One Sample, Dichotomous Outcome":
+					result = (z.get(cbConfidenceLevel.getSelectionModel().getSelectedIndex()) * z.get(cbConfidenceLevel.getSelectionModel().getSelectedIndex())
+							* cbPopulationProp.getValue() * (1 - cbPopulationProp.getValue())) / (cbErrorMargin.getValue() * cbErrorMargin.getValue());
+					break;
+				case "Cochran (small population)":
+					double cochran= (z.get(cbConfidenceLevel.getSelectionModel().getSelectedIndex()) * z.get(cbConfidenceLevel.getSelectionModel().getSelectedIndex())
+							* cbPopulationProp.getValue() * (1 - cbPopulationProp.getValue())) / (cbErrorMargin.getValue() * cbErrorMargin.getValue());
+					try {
+						result = cochran / (1 + ((cochran - 1 ) / Double.parseDouble(txPopulation.getText())));
+					} catch (NumberFormatException e11) {
+						show_alert("Population format number not valid");
 					}
-					if(result>=0) lbResult.setText(String.format("%.2f",result));
+					break;
+				case "Slovin/Yamane": 
+					try {
+						result = Double.parseDouble(txPopulation.getText()) / (1.0 + (Double.parseDouble(txPopulation.getText()) * Math.pow(cbErrorMargin.getValue(), 2)));
+					} catch (NumberFormatException e12) {
+						show_alert("Population format number not valid");
+					}
+					break;
+				case "Sample Size for One Sample, Continuous Outcome":
+					double sd=0.0;
+					try {
+						sd = Double.parseDouble(txSD.getText());
+					} catch (NumberFormatException e13) {
+						show_alert("Standard Desviation format number not valid");
+					}
+					double emu=0.0;
+					try {
+						emu = Double.parseDouble(txErrorMarginUnits.getText());
+						result = Math.pow(z.get(cbConfidenceLevel.getSelectionModel().getSelectedIndex()) * sd / emu , 2);
+					} catch (NumberFormatException e14) {
+						show_alert("Error Margin format number not valid");
+					}
+					break;
+				default:
+					break;
 				}
+				if(result>=0) lbResult.setText(String.format("%.2f",result));
 			});
 
 			vbSamplingType.getChildren().addAll(btCalculate);
@@ -282,7 +276,7 @@ public class Main extends Application {
 		}
 	}
 
-	private void show_error(String msg) {
+	private void show_alert(String msg) {
 		Alert alert = new Alert(AlertType.WARNING);
 		alert.setTitle("Warning");
 		alert.setHeaderText(null);
